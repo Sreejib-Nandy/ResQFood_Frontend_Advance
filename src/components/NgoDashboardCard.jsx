@@ -1,8 +1,7 @@
-import toast from "react-hot-toast";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { collectFood } from "../api/food";
 
-const ClaimedCard = ({ claim = {}, refresh }) => {
+const NgoDashboardCard = ({ claim = {} }) => {
   const navigate = useNavigate();
 
   const food = claim.foodPostId || {};
@@ -34,16 +33,6 @@ const ClaimedCard = ({ claim = {}, refresh }) => {
       minute: "2-digit",
       hour12: true,
     });
-  };
-
-  // MARK COLLECTED
-  const handleCollect = async () => {
-    try {
-      await collectFood(claim._id);
-      refresh();
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Failed to collect");
-    }
   };
 
   // VIEW ROUTE
@@ -102,22 +91,30 @@ const ClaimedCard = ({ claim = {}, refresh }) => {
 
           {restaurant.address && (
             <p className="text-gray-500 text-xs">
-                <b className="text-black font-semibold text-sm">Address:</b>{" "}
+              <b className="text-black font-semibold text-sm">Address:</b>{" "}
               {restaurant.address}
             </p>
           )}
         </div>
 
         {/* STATUS */}
-        <p className="text-sm max-md:text-xs">
-          <b>Status:</b>{" "}
-          <span className={`ml-1 font-medium capitalize ${color}`}>
-            {status}
+        <div className="text-sm font-medium">
+          Status:{" "}
+          <span
+            className={
+              claim.status === "accepted"
+                ? "text-green-600"
+                : claim.status === "collected"
+                  ? "text-blue-600"
+                  : "text-red-500"
+            }
+          >
+            {claim.status}
           </span>
-        </p>
+        </div>
 
         {/* ACTION BUTTONS */}
-        <div className="flex gap-2 mt-3">
+        <div className="flex gap-2 mt-1.5 flex-col">
 
           {/* VIEW ROUTE */}
           <button
@@ -138,28 +135,22 @@ const ClaimedCard = ({ claim = {}, refresh }) => {
             View Route
           </button>
 
-          {/* MARK COLLECTED */}
-          <button
-            onClick={handleCollect}
-            disabled={status !== "accepted"}
-            className="
-              flex-1
-              bg-green-600
-              disabled:bg-gray-300
-              text-white
-              py-2
-              rounded-lg
-              text-sm max-md:text-xs
-              transition cursor-pointer
-              hover:bg-green-400
-            "
-          >
-            Mark Collected
-          </button>
+          {/* OTP DISPLAY */}
+          {claim.status === "accepted" && food?.otp?.code && (
+            <div className="mt-1.5 p-3 bg-green-50 border border-green-200 rounded-lg text-center">
+              <p className="text-sm text-gray-600 mb-1 max-md:text-xs">
+                Show this OTP at restaurant : {" "}
+                <span className="text-md max-md:text-sm font-bold tracking-widest text-green-700">
+                  {food.otp.code}
+                </span>
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-export default ClaimedCard;
+export default NgoDashboardCard;
+

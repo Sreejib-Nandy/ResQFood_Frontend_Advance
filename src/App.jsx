@@ -22,13 +22,22 @@ import NgoDashboard from "./pages/NgoDashboard";
 import NgoRoutePage from "./pages/NgoRoutePage";
 import ImpactPage from "./pages/ImpactPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
-import CSRReport from "./components/CSRReport";
+import CookieConsent from "./components/CookieConsent";
+import NotFound from "./pages/NotFound";
 
 function AppContent() {
   const { loading, showExpiredBanner } = useAuth();
   const location = useLocation();
+  const knownRoutes = [
+  "/", "/signup", "/login", "/complete-profile", "/updateprofile",
+  "/mapview", "/ngo/dashboard"
+];
   const isRestaurantDashboard = location.pathname.startsWith('/restaurant');
   const isCompleteProfilePage = location.pathname === "/complete-profile";
+  const is404 =
+  !knownRoutes.includes(location.pathname) &&
+  !location.pathname.startsWith("/restaurant") &&
+  !location.pathname.startsWith("/ngo/route");
 
   if (loading) {
     return <Spinner />;
@@ -37,7 +46,7 @@ function AppContent() {
   return (
     <>
       <Toaster />
-      {(!isCompleteProfilePage && !isRestaurantDashboard) && <Navbar />}
+      {(!isCompleteProfilePage && !isRestaurantDashboard && !is404) && <Navbar />}
       {showExpiredBanner && <Banner />}
       <Routes>
         <Route path="/" element={<PublicRoute><Home /></PublicRoute>} />
@@ -107,8 +116,9 @@ function AppContent() {
         <Route path="/mapview" element={<ProtectedRoute role="ngo"><MapView /></ProtectedRoute>} />
         <Route path="/ngo/dashboard" element={<ProtectedRoute role="ngo"><NgoDashboard /></ProtectedRoute>} />
         <Route path="/ngo/route/:claimId" element={<ProtectedRoute role="ngo"><NgoRoutePage /></ProtectedRoute>} />
-        <Route path="/csr" element={<CSRReport />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
+      <CookieConsent />
     </>
   );
 }

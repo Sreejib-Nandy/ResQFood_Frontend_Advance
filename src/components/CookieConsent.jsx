@@ -59,7 +59,7 @@ const CookieConsent = () => {
           </a>
           <button
             type="button"
-            className="bg-[#aacd41] px-6 py-2 rounded text-white font-medium active:scale-95 transition"
+            className="bg-[#aacd41] px-6 py-2 rounded text-white font-medium active:scale-95 transition cursor-pointer"
             onClick={handleAccept}
           >
             Accept

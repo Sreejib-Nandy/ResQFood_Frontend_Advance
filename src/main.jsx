@@ -4,6 +4,9 @@ import "./index.css";
 import App from "./App.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { BrowserRouter } from "react-router-dom";
+import "primereact/resources/themes/lara-light-green/theme.css"; 
+import "primereact/resources/primereact.min.css"; 
+import "primeicons/primeicons.css"; 
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { LoadScript } from "@react-google-maps/api";
 

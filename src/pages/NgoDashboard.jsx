@@ -9,7 +9,6 @@ const NgoDashboard = () => {
   const [claims, setClaims] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // FETCH CLAIMS
   const fetchClaims = async () => {
     try {
       setLoading(true);
@@ -22,22 +21,17 @@ const NgoDashboard = () => {
     }
   };
 
-  // INITIAL LOAD
   useEffect(() => {
     const init = () => {
-        fetchClaims();
+      fetchClaims();
     }
+
     init();
   }, []);
 
-  // SOCKET SYNC
   useEffect(() => {
     const handleAccepted = () => {
-      fetchClaims();
-    };
-
-    const handleCollected = () => {
-      toast.success("Food marked as collected");
+      toast.success("Your claim was accepted!");
       fetchClaims();
     };
 
@@ -46,17 +40,16 @@ const NgoDashboard = () => {
     };
 
     const handleExpired = () => {
+      toast.error("Food expired");
       fetchClaims();
     };
 
     socket.on("claim_accepted", handleAccepted);
-    socket.on("food_collected", handleCollected);
     socket.on("food_unavailable", handleUnavailable);
     socket.on("food_expired", handleExpired);
 
     return () => {
       socket.off("claim_accepted", handleAccepted);
-      socket.off("food_collected", handleCollected);
       socket.off("food_unavailable", handleUnavailable);
       socket.off("food_expired", handleExpired);
     };
@@ -81,8 +74,7 @@ const NgoDashboard = () => {
           {claims.map((claim) => (
             <NgoDashboardCard
               key={claim._id}
-              claim={claim}      
-              refresh={fetchClaims}
+              claim={claim}
             />
           ))}
         </div>

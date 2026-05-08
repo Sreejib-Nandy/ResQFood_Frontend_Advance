@@ -198,8 +198,11 @@ const MapView = () => {
   return (
     <>
       {/* CONTROLS */}
-      <div className="absolute z-10 top-20 right-5 bg-white p-4 rounded-lg shadow-lg flex gap-3">
-        <label className="text-sm flex items-center">Radius (km)</label>
+      <div className="absolute z-10 top-20 max-md:top-22 right-5 bg-white p-4 max-md:p-2 rounded-lg shadow-lg flex gap-3 max-md:gap-2 items-center text-sm max-md:text-xs">
+
+        <label className="flex items-center whitespace-nowrap">
+          Radius (km)
+        </label>
 
         <input
           type="number"
@@ -221,12 +224,12 @@ const MapView = () => {
 
             setRadius(Math.max(1, num));
           }}
-          className="border px-2 py-1 rounded w-20"
+          className="border px-2 py-1 max-md:px-1 max-md:py-0.5 rounded w-20 max-md:w-14 text-sm max-md:text-xs"
         />
 
         <button
           onClick={fetchFoods}
-          className="bg-[#b9de4a] text-white px-3 py-1 rounded"
+          className="bg-[#b9de4a] text-white px-3 py-1 max-md:px-2 max-md:py-0.5 rounded text-sm max-md:text-xs cursor-pointer"
         >
           Search
         </button>
@@ -263,7 +266,7 @@ const MapView = () => {
               key={idx}
               position={{ lat, lng }}
               label={
-                group.foods.length > 1
+                group.foods.length >= 1
                   ? {
                     text: String(group.foods.length),
                     color: "black",

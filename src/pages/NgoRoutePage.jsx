@@ -26,7 +26,7 @@ const NgoRoutePage = () => {
   const [directions, setDirections] = useState(null);
   const [routeInfo, setRouteInfo] = useState(null);
 
-  // Distance helper
+  // Distance helper - Harvesine Formula
   const getDistance = (p1, p2) => {
     if (!p1 || !p2) return 0;
     const R = 6371e3;
@@ -36,8 +36,8 @@ const NgoRoutePage = () => {
     const a =
       Math.sin(dLat / 2) ** 2 +
       Math.cos((p1.lat * Math.PI) / 180) *
-        Math.cos((p2.lat * Math.PI) / 180) *
-        Math.sin(dLon / 2) ** 2;
+      Math.cos((p2.lat * Math.PI) / 180) *
+      Math.sin(dLon / 2) ** 2;
 
     return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   };
@@ -145,15 +145,18 @@ const NgoRoutePage = () => {
     <>
       {/* DISTANCE CARD */}
       {routeInfo && (
-        <div className="absolute z-10 top-20 left-1/2 -translate-x-1/2 bg-white px-6 py-2 rounded shadow flex gap-6 text-sm max-md:text-xs font-medium">
+        <div className="absolute z-10 top-20 left-1/2 -translate-x-1/2 bg-white px-6 py-2 max-md:px-3 max-md:py-1 rounded shadow flex gap-6 max-md:gap-3 text-sm max-md:text-xs font-medium max-md:flex-nowrap max-md:whitespace-nowrap">
+
           <div>
             <span className="text-gray-500">Distance:</span>{" "}
             {routeInfo.distance}
           </div>
+
           <div>
             <span className="text-gray-500">ETA:</span>{" "}
             {routeInfo.duration}
           </div>
+
         </div>
       )}
 

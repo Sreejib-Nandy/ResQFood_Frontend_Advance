@@ -12,11 +12,12 @@ import Testimonials from "./Testimonials";
 import FAQ from "./FAQ";
 import Footer from "./Footer";
 import { useAuth } from "../context/AuthContext";
+import Spinner from "./Spinner";
 
 const HeroSection = () => {
   const { user, loading } = useAuth();
 
-  if (loading) return null;
+  if (loading) return <Spinner/>;
   return (
     <div className="h-175 relative pt-16 md:pt-20">
       {/* Background Image */}
@@ -49,12 +50,22 @@ const HeroSection = () => {
               redistribute surplus meals to those who need them.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Link
+              {!user ? <Link
                 to="/signup"
                 className="bg-white/90 text-green-700 px-5 py-3 flex items-center rounded-lg shadow font-semibold max-md:font-medium hover:text-white hover:bg-green-700 transition all duration-700"
               >
                 Get Started
-              </Link>
+              </Link> : user.role === "restaurant" ? <Link
+                to="/restaurant/dashboard/create-food"
+                className="bg-white/90 text-green-700 px-5 py-3 flex items-center rounded-lg shadow font-semibold max-md:font-medium hover:text-white hover:bg-green-700 transition all duration-700"
+              >
+                Dashboard
+              </Link> :  <Link
+                to="/ngo/dashboard"
+                className="bg-white/90 text-green-700 px-5 py-3 flex items-center rounded-lg shadow font-semibold max-md:font-medium hover:text-white hover:bg-green-700 transition all duration-700"
+              >
+                Dashboard
+              </Link>}
               <a
                 href="#testimonials"
                 className="border-2 border-white/30 text-white px-5 py-3 rounded-lg font-semibold max-md:font-medium flex items-center "

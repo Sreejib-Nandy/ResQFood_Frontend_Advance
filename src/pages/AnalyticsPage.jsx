@@ -7,9 +7,8 @@ import {
 } from "recharts";
 import api from "../api/axios";
 import Spinner from "../components/Spinner";
-import CSRReport from "../components/CSRReport";
+import CSRReport from "../pages/CSRReport"
 import { useAuth } from "../context/AuthContext";
-import html2pdf from "html2pdf.js";
 
 const COLORS = ["#82ca9d", "#8884d8", "#ff7300", "#ff4d4f"];
 
@@ -61,17 +60,68 @@ const AnalyticsPage = () => {
 
     // CSR DOWNLOAD (CURRENT MONTH ONLY)
     const downloadCSR = () => {
-        const element = document.getElementById("csr-download");
+        const content = document.getElementById("csr-download");
 
-        const opt = {
-            margin: 10,
-            filename: `CSR_${month}_${year}.pdf`,
-            image: { type: "jpeg", quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true },
-            jsPDF: { unit: "mm", format: "a4" },
-        };
+        // Create hidden iframe
+        const iframe = document.createElement("iframe");
+        iframe.style.position = "fixed";
+        iframe.style.right = "0";
+        iframe.style.bottom = "0";
+        iframe.style.width = "0";
+        iframe.style.height = "0";
+        iframe.style.border = "none";
 
-        html2pdf().set(opt).from(element).save();
+        document.body.appendChild(iframe);
+
+        const doc = iframe.contentWindow.document;
+
+        doc.open();
+        doc.write(`
+      <html>
+        <head>
+          <title>CSR Report</title>
+
+          <style>
+            @page {
+               size: A4;
+               margin: 8mm;
+             }
+
+             html, body {
+               width: 210mm;
+               height: 297mm;
+               margin: 0;
+               padding: 0;
+             }
+
+             #pdf-root {
+               width: 100%;
+               height: 100%;
+               display: flex;
+               flex-direction: column;
+             }
+          </style>
+        </head>
+
+        <body>
+          <div id="pdf-root">
+            ${content.innerHTML}
+          </div>
+        </body>
+      </html>
+    `);
+        doc.close();
+
+        // Print
+        setTimeout(() => {
+            iframe.contentWindow.focus();
+            iframe.contentWindow.print();
+
+            // cleanup
+            setTimeout(() => {
+                document.body.removeChild(iframe);
+            }, 1000);
+        }, 500);
     };
 
     const safePieData =
@@ -87,17 +137,17 @@ const AnalyticsPage = () => {
                     {/* HEADER */}
                     <div className="flex justify-between items-center flex-wrap gap-4">
 
-                        <h1 className="text-2xl font-semibold">
+                        <h1 className="text-2xl max-md:text-lg font-semibold">
                             Analytics Dashboard
                         </h1>
 
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 flex-wrap">
 
                             {/* MONTH */}
                             <select
                                 value={month}
                                 onChange={(e) => setMonth(Number(e.target.value))}
-                                className="border px-3 py-2 rounded"
+                                className="border px-1.5 py-2 rounded"
                             >
                                 {[...Array(12)].map((_, i) => {
                                     const m = i + 1;
@@ -122,7 +172,7 @@ const AnalyticsPage = () => {
                             <select
                                 value={year}
                                 onChange={(e) => setYear(Number(e.target.value))}
-                                className="border px-3 py-2 rounded"
+                                className="border px-1.5 py-2 rounded"
                             >
                                 {yearsArray.map((y) => (
                                     <option key={y}>{y}</option>
@@ -131,8 +181,9 @@ const AnalyticsPage = () => {
 
                             {/* CSR BUTTON */}
                             <button
+                                type="button"
                                 onClick={downloadCSR}
-                                className="bg-[#ccff33] px-4 py-2 rounded font-medium cursor-pointer hover:bg-[#ccff33]/75"
+                                className="bg-[#ccff33] px-5 py-2 rounded font-medium cursor-pointer max-md:text-xs text-sm hover:bg-[#ccff33]/45"
                             >
                                 Download CSR
                             </button>
@@ -281,10 +332,9 @@ const AnalyticsPage = () => {
                         position: "fixed",
                         top: 0,
                         left: 0,
-                        width: "800px",
-                        background: "white",
-                        opacity: 0,
-                        zIndex: -1
+                        width: "820px",
+                        visibility: "hidden",
+                        pointerEvents: "none"
                     }}
                 >
                     <div id="csr-download">

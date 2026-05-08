@@ -86,8 +86,8 @@ export const rejectClaim = (claimId) => {
 // COLLECTION
 // -----------------------------
 
-export const collectFood = (claimId) => {
-  return api.post("/food/collect", { claimId });
+export const onVerifyOtp = (foodId, otp) => {
+  return api.post("/food/verify-otp", { foodId, otp });
 };
 
 export const getEachClaimRoute = (claimId) => {

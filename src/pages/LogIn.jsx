@@ -33,12 +33,10 @@ const LogIn = () => {
   const googleLogin = useGoogleLogin({
     flow: "auth-code",
     onSuccess: async (codeResponse) => {
-      console.log(codeResponse);
-
       await googleAuth(codeResponse.code);
     },
     onError: () => {
-      console.log("Google Login Failed");
+
     },
   });
 

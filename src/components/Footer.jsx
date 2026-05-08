@@ -146,7 +146,7 @@ const Footer = () => {
 
         <div className="max-w-7xl mx-auto mt-8 pt-2 border-t border-neutral-700 flex justify-between items-center">
           <p className="text-center text-md max-md:text-sm text-white/70 mt-4 pb-4">
-            © 2025{" "}
+            © 2026{" "}
             <span className="text-neutral-400">
               Res<span className="text-[#ccff33]">Q</span>Food
             </span>

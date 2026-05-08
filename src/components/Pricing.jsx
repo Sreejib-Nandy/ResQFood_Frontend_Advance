@@ -60,8 +60,6 @@ const Pricing = () => {
         },
 
         handler: async function (response) {
-          console.log("Payment response:", response);
-
           toast.loading("Processing payment...", { id: "payment" });
 
           // Poll user update (better than fixed timeout)

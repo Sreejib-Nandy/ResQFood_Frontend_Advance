@@ -76,7 +76,6 @@ export default function Signup() {
       await googleAuth(codeResponse.code);
     },
     onError: () => {
-      console.log("Signup Failed");
     },
   });
 
