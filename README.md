@@ -1,3 +1,4 @@
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 # 🌱 ResQFood Frontend — Real-Time Food Redistribution Platform
 
 >**ResQFood Frontend** is a modern, real-time web application that connects **restaurants** with **NGOs** to redistribute surplus food efficiently before it expires.
