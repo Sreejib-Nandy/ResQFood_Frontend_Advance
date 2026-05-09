@@ -457,5 +457,3 @@ If you believe in reducing food waste
 - Give it a ⭐ on GitHub
 - Share with others
 - Contribute to the project
-- Contribute to the project
->>>>>>> 08c50fba1269d8d81c542ad0c8805f9d3f6c8258
