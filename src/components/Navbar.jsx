@@ -21,7 +21,7 @@ const Navbar = () => {
   return (
     <>
       <div
-        className={`fixed top-0 left-0 z-9999 w-full flex items-center justify-between px-4 pr-5 sm:px-6 md:px-8 lg:px-16 py-2 max-md:py-4 text-white ${isHome ? "bg-blue-950/65" : "bg-blue-950/90"} backdrop-blur-md transition-all duration-600`}
+        className={`fixed top-0 left-0 z-55 w-full flex items-center justify-between px-4 pr-5 sm:px-6 md:px-8 lg:px-16 py-2 max-md:py-4 text-white ${isHome ? "bg-blue-950/65" : "bg-blue-950/90"} backdrop-blur-md transition-all duration-600`}
       >
         {/* Logo */}
         <Link
