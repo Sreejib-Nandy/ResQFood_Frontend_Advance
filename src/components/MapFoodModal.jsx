@@ -47,7 +47,7 @@ const MapFoodModal = ({ foods = [], onClose, refresh, onClaimSuccess, claimedFoo
       ">
 
         {/* HEADER */}
-        <div className="flex items-center justify-between p-3.5 border-b">
+        <div className="flex items-center justify-between p-3.5 border-b mt-4.5">
           <h2 className="text-lg font-semibold text-gray-800">
             Food Details ({foods.length})
           </h2>
